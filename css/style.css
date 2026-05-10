@@ -1,6 +1,17 @@
 /* ============================================================
-   style.css  — LifeFlow Blood Bank Management System
-   Main Stylesheet
+   style.css — LEGACY ENTRY POINT
+   This file has been split into focused modules.
+   The new entry point is index.php which links each file
+   directly. This file is kept only for backwards compatibility.
+
+   New CSS files (in css/):
+     variables.css  — CSS custom properties & reset
+     base.css       — typography & utility classes
+     navbar.css     — navigation bar
+     components.css — buttons, cards, forms, alerts, pills
+     tables.css     — table styles
+     layout.css     — page headers, sections, footer
+     animations.css — keyframes & responsive media queries
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
@@ -13,7 +24,7 @@
 }
 
 :root {
-    --red:        #C0392B;
+    --red:        #c81400;
     --red-dark:   #922B21;
     --red-mid:    #E74C3C;
     --red-light:  #FADBD8;

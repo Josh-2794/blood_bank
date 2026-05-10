@@ -1,0 +1,160 @@
+/* ============================================================
+   components.css — Buttons, Cards, Forms, Alerts, Pills, Admin Nav
+   ============================================================ */
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+    line-height: 1;
+}
+.btn-primary       { background: var(--red);        color: #fff;           border-color: var(--red); }
+.btn-primary:hover { background: var(--red-dark);   border-color: var(--red-dark); transform: translateY(-1px); }
+.btn-outline       { background: transparent;       color: var(--red);     border-color: var(--red); }
+.btn-outline:hover { background: var(--red-light); }
+.btn-ghost         { background: var(--gray-100);   color: var(--gray-600); border-color: transparent; }
+.btn-ghost:hover   { background: var(--gray-200); }
+.btn-sm            { padding: 7px 16px; font-size: 13px; }
+.btn-danger        { background: var(--danger-bg);  color: var(--danger-text); border-color: var(--danger-bg); }
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    transition: var(--transition);
+}
+.card:hover { border-color: #f0b0ab; box-shadow: var(--shadow-md); }
+
+/* ── Form Card & Grid ────────────────────────────────────── */
+.form-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    max-width: 760px;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.form-group      { display: flex; flex-direction: column; gap: 7px; }
+.form-group.full { grid-column: 1 / -1; }
+
+label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="password"],
+select,
+textarea {
+    padding: 11px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--gray-800);
+    background: var(--gray-50);
+    transition: var(--transition);
+    outline: none;
+    width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--red);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(192,57,43,.12);
+}
+textarea { min-height: 100px; resize: vertical; }
+
+/* ── Blood Group Selector ────────────────────────────────── */
+.blood-group-selector { display: flex; flex-wrap: wrap; gap: 8px; }
+.bg-btn {
+    padding: 9px 15px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    background: white;
+    color: var(--gray-600);
+    transition: var(--transition);
+    min-width: 52px;
+    text-align: center;
+}
+.bg-btn:hover, .bg-btn.selected {
+    border-color: var(--red);
+    background: var(--red-light);
+    color: var(--red-dark);
+}
+
+/* ── Alerts ──────────────────────────────────────────────── */
+.alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 18px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 18px;
+}
+.alert-success { background: var(--success-bg); color: var(--success-text); border: 1px solid #a5d6a7; }
+.alert-danger  { background: var(--danger-bg);  color: var(--danger-text);  border: 1px solid #ef9a9a; }
+.alert-warning { background: var(--warning-bg); color: var(--warning-text); border: 1px solid #ffe082; }
+.alert.hidden  { display: none; }
+
+/* ── Status Pills ────────────────────────────────────────── */
+.pill {
+    display: inline-flex;
+    padding: 3px 12px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+.pill-success { background: var(--success-bg); color: var(--success-text); }
+.pill-warning { background: var(--warning-bg); color: var(--warning-text); }
+.pill-danger  { background: var(--danger-bg);  color: var(--danger-text);  }
+.pill-info    { background: #e3f2fd;            color: #1565c0;             }
+
+/* ── Admin Sidebar Nav ───────────────────────────────────── */
+.admin-nav-item {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--gray-600);
+    font-weight: 500;
+    transition: .15s;
+    border-left: 3px solid transparent;
+    font-family: var(--font-body);
+    user-select: none;
+}
+.admin-nav-item:hover, .admin-nav-item.active {
+    background: var(--red-light);
+    color: var(--red-dark);
+    border-left-color: var(--red);
+}

@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LifeFlow Blood Bank — Project Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --red: #c81400;
+    --red-light: #fff0ef;
+    --dark: #1a1a2e;
+    --gray: #555;
+    --border: #e0e0e0;
+    --code-bg: #f4f4f4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: #222;
+    background: #fff;
+    font-size: 13.5px;
+    line-height: 1.75;
+  }
+
+  /* ── Cover Page ─── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #922B21 100%);
+    color: white;
+    padding: 60px;
+    page-break-after: always;
+  }
+  .cover-logo {
+    width: 80px; height: 80px;
+    background: #c81400;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 36px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle { font-size: 16px; color: #ffb3ae; margin-bottom: 6px; }
+  .cover .tag {
+    display: inline-block;
+    margin-top: 30px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .cover .meta { margin-top: 50px; font-size: 13px; color: #aaa; line-height: 2; }
+
+  /* ── Layout ─── */
+  .page { max-width: 860px; margin: 0 auto; padding: 50px 60px; }
+
+  /* ── Section Headings ─── */
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--dark);
+    border-bottom: 3px solid var(--red);
+    padding-bottom: 8px;
+    margin: 48px 0 20px;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+    margin: 28px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 18px 0 6px;
+  }
+  p { color: var(--gray); margin-bottom: 10px; }
+
+  /* ── Table of Contents ─── */
+  .toc { page-break-after: always; }
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px dotted #ddd;
+    font-size: 13px;
+  }
+  .toc-item a { color: #222; text-decoration: none; font-weight: 500; }
+  .toc-num { color: var(--red); font-weight: 700; min-width: 28px; }
+  .toc-sub { padding-left: 20px; font-size: 12px; color: #777; }
+
+  /* ── Code Blocks ─── */
+  pre, code {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+  }
+  pre {
+    background: var(--code-bg);
+    border-left: 3px solid var(--red);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    overflow-x: auto;
+    margin: 12px 0;
+    color: #1a1a2e;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11.5px;
+    color: #c81400;
+  }
+
+  /* ── Tables ─── */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12.5px; }
+  th {
+    background: var(--dark);
+    color: white;
+    padding: 9px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  tr:hover td { background: var(--red-light); }
+
+  /* ── Callout Boxes ─── */
+  .box {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13px;
+  }
+  .box-info    { background: #e3f2fd; border-left: 4px solid #1565c0; color: #0d47a1; }
+  .box-warn    { background: #fff8e1; border-left: 4px solid #f9a825; color: #5d4037; }
+  .box-danger  { background: #fce4e4; border-left: 4px solid #c81400; color: #7f1515; }
+  .box-success { background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20; }
+
+  /* ── Q&A Blocks ─── */
+  .qa { margin: 16px 0; }
+  .question {
+    background: #1a1a2e;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px 6px 0 0;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .question::before { content: "Q: "; color: #ffb3ae; }
+  .answer {
+    background: var(--red-light);
+    border: 1px solid #f5d0ce;
+    border-top: none;
+    padding: 12px 16px;
+    border-radius: 0 0 6px 6px;
+    color: #555;
+    font-size: 13px;
+  }
+  .answer::before { content: "A: "; font-weight: 700; color: var(--red); }
+
+  /* ── File Tree ─── */
+  .tree {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    padding: 20px 24px;
+    border-radius: 8px;
+    line-height: 2;
+    margin: 14px 0;
+  }
+  .tree .dir  { color: #82b1ff; }
+  .tree .file { color: #a5d6a7; }
+  .tree .note { color: #888; font-style: italic; }
+
+  /* ── ER Diagram ─── */
+  .er-box {
+    display: inline-block;
+    border: 2px solid var(--red);
+    border-radius: 8px;
+    min-width: 160px;
+    margin: 8px;
+    overflow: hidden;
+    font-size: 12px;
+    vertical-align: top;
+  }
+  .er-title {
+    background: var(--red);
+    color: white;
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .er-field {
+    padding: 3px 12px;
+    border-bottom: 1px solid #f0d0ce;
+    font-family: 'Fira Code', monospace;
+  }
+  .er-field.pk { color: var(--red); font-weight: 700; }
+  .er-field.fk { color: #1565c0; }
+  .er-wrap { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+
+  /* ── Pill badges ─── */
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 2px;
+  }
+  .pill-red    { background: #fce4e4; color: #c81400; }
+  .pill-blue   { background: #e3f2fd; color: #1565c0; }
+  .pill-green  { background: #e8f5e9; color: #2e7d32; }
+  .pill-orange { background: #fff3e0; color: #e65100; }
+
+  /* ── Print ─── */
+  @media print {
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    pre, .tree, .question { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2 { page-break-before: always; }
+    h2:first-of-type { page-break-before: avoid; }
+    .no-break { page-break-inside: avoid; }
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+  ul, ol { padding-left: 22px; color: var(--gray); margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+  strong { color: #222; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-logo">🩸</div>
+  <h1>LifeFlow Blood Bank</h1>
+  <div class="subtitle">Blood Bank &amp; Donation Management System</div>
+  <div class="subtitle" style="color:#ccc;font-size:13px">Complete Project Documentation &amp; DBMS Reference</div>
+  <div class="tag">DBMS Project Report</div>
+  <div class="meta">
+    Technology Stack: PHP · MySQL · HTML · CSS · JavaScript<br>
+    Server Environment: XAMPP (Apache + MySQL)<br>
+    Year: 2026
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ════════════════════════════════════════════════════════
+     TABLE OF CONTENTS
+════════════════════════════════════════════════════════ -->
+<div class="toc">
+  <h2 style="margin-top:0">Table of Contents</h2>
+
+  <div class="toc-item"><span><span class="toc-num">1.</span> <a href="#overview">Project Overview</a></span><span>2</span></div>
+  <div class="toc-item"><span><span class="toc-num">2.</span> <a href="#architecture">System Architecture</a></span><span>3</span></div>
+  <div class="toc-item"><span><span class="toc-num">3.</span> <a href="#filestructure">File Structure</a></span><span>4</span></div>
+  <div class="toc-item"><span><span class="toc-num">4.</span> <a href="#database">Database Design</a></span><span>5</span></div>
+  <div class="toc-item toc-sub"><span>4.1 Tables &amp; Schema</span></div>
+  <div class="toc-item toc-sub"><span>4.2 Entity-Relationship Diagram</span></div>
+  <div class="toc-item toc-sub"><span>4.3 Views</span></div>
+  <div class="toc-item toc-sub"><span>4.4 Stored Procedures</span></div>
+  <div class="toc-item toc-sub"><span>4.5 Normalization</span></div>
+  <div class="toc-item"><span><span class="toc-num">5.</span> <a href="#api">Backend API — PHP Files</a></span><span>9</span></div>
+  <div class="toc-item"><span><span class="toc-num">6.</span> <a href="#js">Frontend JavaScript — Functions</a></span><span>11</span></div>
+  <div class="toc-item"><span><span class="toc-num">7.</span> <a href="#css">CSS Architecture</a></span><span>13</span></div>
+  <div class="toc-item"><span><span class="toc-num">8.</span> <a href="#dataflow">Data Flow — End to End</a></span><span>14</span></div>
+  <div class="toc-item"><span><span class="toc-num">9.</span> <a href="#questions">Expected DBMS Lecturer Questions &amp; Answers</a></span><span>15</span></div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     1. PROJECT OVERVIEW
+════════════════════════════════════════════════════════ -->
+<h2 id="overview">1. Project Overview</h2>
+
+<p><strong>LifeFlow</strong> is a full-stack Blood Bank and Donation Management System built as a DBMS project. It connects blood donors with patients in need, provides real-time inventory tracking, and offers an admin dashboard for management.</p>
+
+<table>
+  <tr><th>Attribute</th><th>Details</th></tr>
+  <tr><td><strong>Project Name</strong></td><td>LifeFlow Blood Bank &amp; Donation Management System</td></tr>
+  <tr><td><strong>Type</strong></td><td>Web Application (Single Page App + PHP REST API)</td></tr>
+  <tr><td><strong>Frontend</strong></td><td>HTML5, CSS3, Vanilla JavaScript (ES6+)</td></tr>
+  <tr><td><strong>Backend</strong></td><td>PHP 8.x (REST API)</td></tr>
+  <tr><td><strong>Database</strong></td><td>MySQL 8.x via MySQLi</td></tr>
+  <tr><td><strong>Server</strong></td><td>XAMPP (Apache + MySQL)</td></tr>
+  <tr><td><strong>Database Name</strong></td><td><code>blood_bank_db</code></td></tr>
+</table>
+
+<h3>Core Features</h3>
+<ul>
+  <li>Donor registration with blood group, city, availability status</li>
+  <li>Blood donor search by blood group, city and availability</li>
+  <li>Blood request submission (patients/hospitals)</li>
+  <li>Real-time blood inventory display with stock percentage</li>
+  <li>Admin dashboard — manage donors, approve/reject requests, update inventory</li>
+  <li>Donation log tracking with stored procedures</li>
+  <li>Admin authentication with hashed passwords (bcrypt)</li>
+</ul>
+
+
+<!-- ════════════════════════════════════════════════════════
+     2. SYSTEM ARCHITECTURE
+════════════════════════════════════════════════════════ -->
+<h2 id="architecture">2. System Architecture</h2>
+
+<p>The project follows a <strong>3-Tier Architecture</strong>:</p>
+
+<table>
+  <tr><th>Tier</th><th>Technology</th><th>Responsibility</th></tr>
+  <tr><td><strong>Presentation (Client)</strong></td><td>HTML, CSS, JavaScript</td><td>User interface, form handling, SPA routing, AJAX calls</td></tr>
+  <tr><td><strong>Application (Server)</strong></td><td>PHP 8.x</td><td>REST API endpoints, business logic, input validation, SQL queries</td></tr>
+  <tr><td><strong>Data (Database)</strong></td><td>MySQL 8.x</td><td>Data storage, views, stored procedures, constraints</td></tr>
+</table>
+
+<h3>Request Flow</h3>
+<pre>
+Browser (User)
+   │
+   ├── Loads: index.php (HTML shell + CSS + JS)
+   │
+   └── User Action (e.g. Register Donor)
+          │
+          ▼
+   JavaScript (donors.js)
+          │  fetch() POST → JSON
+          ▼
+   PHP API (api/donors.php)
+          │  MySQLi prepared statement
+          ▼
+   MySQL Database (blood_bank_db)
+          │  INSERT INTO donors ...
+          ▼
+   PHP returns JSON response
+          │
+          ▼
+   JavaScript shows success/error alert
+</pre>
+
+<div class="box box-info">
+  <strong>SPA Pattern:</strong> The site is a Single Page Application — only one HTML file loads. JavaScript shows/hides page sections using <code>showPage()</code>. No full page reload happens when navigating.
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     3. FILE STRUCTURE
+════════════════════════════════════════════════════════ -->
+<h2 id="filestructure">3. File Structure</h2>
+
+<div class="tree">
+<span class="dir">blood_bank/</span><br>
+├── <span class="file">index.php</span>           <span class="note">← main entry point, PHP includes all pages</span><br>
+├── <span class="file">project_report.html</span> <span class="note">← this document</span><br>
+│<br>
+├── <span class="dir">pages/</span>               <span class="note">← one HTML partial per page</span><br>
+│   ├── <span class="file">home.php</span>         <span class="note">← hero section + feature cards</span><br>
+│   ├── <span class="file">donate.php</span>       <span class="note">← donor registration form</span><br>
+│   ├── <span class="file">request.php</span>      <span class="note">← donor search + blood request form</span><br>
+│   ├── <span class="file">inventory.php</span>    <span class="note">← blood stock cards + donation log</span><br>
+│   ├── <span class="file">admin.php</span>        <span class="note">← admin dashboard with 5 tabs</span><br>
+│   └── <span class="file">about.php</span>        <span class="note">← team info + contact form</span><br>
+│<br>
+├── <span class="dir">css/</span>                 <span class="note">← one file per styling concern</span><br>
+│   ├── <span class="file">variables.css</span>    <span class="note">← CSS custom properties + global reset</span><br>
+│   ├── <span class="file">base.css</span>         <span class="note">← typography + utility classes</span><br>
+│   ├── <span class="file">navbar.css</span>       <span class="note">← navigation bar styles</span><br>
+│   ├── <span class="file">components.css</span>   <span class="note">← buttons, cards, forms, alerts, pills</span><br>
+│   ├── <span class="file">tables.css</span>       <span class="note">← data table styles</span><br>
+│   ├── <span class="file">layout.css</span>       <span class="note">← page headers, sections, footer</span><br>
+│   └── <span class="file">animations.css</span>   <span class="note">← keyframes + responsive media queries</span><br>
+│<br>
+├── <span class="dir">js/</span>                  <span class="note">← one file per feature module</span><br>
+│   ├── <span class="file">utils.js</span>         <span class="note">← API endpoints + helper functions</span><br>
+│   ├── <span class="file">router.js</span>        <span class="note">← SPA page routing (showPage)</span><br>
+│   ├── <span class="file">donors.js</span>        <span class="note">← registration, search, card rendering</span><br>
+│   ├── <span class="file">requests.js</span>      <span class="note">← blood request form submission</span><br>
+│   ├── <span class="file">inventory.js</span>     <span class="note">← inventory loading + card rendering</span><br>
+│   ├── <span class="file">admin.js</span>         <span class="note">← dashboard, tables, tab switching</span><br>
+│   └── <span class="file">main.js</span>          <span class="note">← DOMContentLoaded init entry point</span><br>
+│<br>
+├── <span class="dir">api/</span>                 <span class="note">← PHP REST API endpoints</span><br>
+│   ├── <span class="file">db_connect.php</span>   <span class="note">← DB connection + shared helpers</span><br>
+│   ├── <span class="file">donors.php</span>       <span class="note">← GET (search) / POST (register)</span><br>
+│   ├── <span class="file">inventory.php</span>    <span class="note">← GET / PUT (update) / POST (log donation)</span><br>
+│   ├── <span class="file">requests.php</span>     <span class="note">← GET / POST (submit) / PUT (status)</span><br>
+│   └── <span class="file">admin_login.php</span>  <span class="note">← POST (login) / GET (session check)</span><br>
+│<br>
+└── <span class="dir">sql/</span><br>
+    └── <span class="file">blood_bank.sql</span>   <span class="note">← full DB schema, seed data, views, procedures</span><br>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     4. DATABASE DESIGN
+════════════════════════════════════════════════════════ -->
+<h2 id="database">4. Database Design</h2>
+
+<h3>4.1 Tables &amp; Schema</h3>
+<p>The database <code>blood_bank_db</code> contains <strong>5 tables</strong>:</p>
+
+<!-- admins -->
+<h4>Table 1: admins</h4>
+<p>Stores admin user credentials for the management panel.</p>
+<table>
+  <tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr>
+  <tr><td><code>id</code></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Unique admin ID</td></tr>
+  <tr><td><code>username</code></td><td>VARCHAR(50)</td><td>NOT NULL, UNIQUE</td><td>Login username</td></tr>
+  <tr><td><code>password</code></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>bcrypt hashed password</td></tr>
+  <tr><td><code>email</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Admin email</td></tr>
+  <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Account creation time</td></tr>
+</table>
+
+<!-- donors -->
+<h4>Table 2: donors</h4>
+<p>Stores all registered blood donor profiles.</p>
+<table>
+  <tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr>
+  <tr><td><code>id</code></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Unique donor ID</td></tr>
+  <tr><td><code>first_name</code></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Donor first name</td></tr>
+  <tr><td><code>last_name</code></td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Donor last name</td></tr>
+  <tr><td><code>email</code></td><td>VARCHAR(100)</td><td>NOT NULL, UNIQUE</td><td>Prevents duplicate registration</td></tr>
+  <tr><td><code>phone</code></td><td>VARCHAR(20)</td><td>NOT NULL</td><td>Contact number</td></tr>
+  <tr><td><code>date_of_birth</code></td><td>DATE</td><td>NOT NULL</td><td>Used to verify age eligibility</td></tr>
+  <tr><td><code>gender</code></td><td>ENUM</td><td>Male/Female/Other</td><td>Gender of donor</td></tr>
+  <tr><td><code>blood_group</code></td><td>ENUM</td><td>A+/A-/B+/B-/AB+/AB-/O+/O-</td><td>Blood type</td></tr>
+  <tr><td><code>city</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Location for nearby search</td></tr>
+  <tr><td><code>weight_kg</code></td><td>DECIMAL(5,2)</td><td>NULL allowed</td><td>Minimum 50kg to donate</td></tr>
+  <tr><td><code>last_donation</code></td><td>DATE</td><td>NULL allowed</td><td>For eligibility tracking (90-day rule)</td></tr>
+  <tr><td><code>availability</code></td><td>ENUM</td><td>DEFAULT 'Available Now'</td><td>Current availability status</td></tr>
+  <tr><td><code>medical_notes</code></td><td>TEXT</td><td>NULL allowed</td><td>Health conditions/medications</td></tr>
+  <tr><td><code>is_active</code></td><td>TINYINT(1)</td><td>DEFAULT 1</td><td>Soft delete flag</td></tr>
+  <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Registration time</td></tr>
+  <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>ON UPDATE NOW()</td><td>Last update time</td></tr>
+</table>
+
+<!-- blood_requests -->
+<h4>Table 3: blood_requests</h4>
+<p>Stores blood requests submitted by patients or hospitals.</p>
+<table>
+  <tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr>
+  <tr><td><code>id</code></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Unique request ID</td></tr>
+  <tr><td><code>patient_name</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Name of patient needing blood</td></tr>
+  <tr><td><code>contact_number</code></td><td>VARCHAR(20)</td><td>NOT NULL</td><td>Emergency contact</td></tr>
+  <tr><td><code>blood_group</code></td><td>ENUM</td><td>NOT NULL</td><td>Required blood type</td></tr>
+  <tr><td><code>units_required</code></td><td>INT</td><td>DEFAULT 1</td><td>Number of blood units needed</td></tr>
+  <tr><td><code>hospital</code></td><td>VARCHAR(150)</td><td>NOT NULL</td><td>Hospital name and location</td></tr>
+  <tr><td><code>required_by</code></td><td>DATE</td><td>NOT NULL</td><td>Deadline date for blood</td></tr>
+  <tr><td><code>additional_notes</code></td><td>TEXT</td><td>NULL allowed</td><td>Urgency level, patient condition</td></tr>
+  <tr><td><code>status</code></td><td>ENUM</td><td>Pending/Approved/Fulfilled/Rejected</td><td>Current request status</td></tr>
+  <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Submission time</td></tr>
+</table>
+
+<!-- blood_inventory -->
+<h4>Table 4: blood_inventory</h4>
+<p>Tracks current stock of each blood type in the bank.</p>
+<table>
+  <tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr>
+  <tr><td><code>id</code></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Row ID</td></tr>
+  <tr><td><code>blood_group</code></td><td>ENUM</td><td>NOT NULL, UNIQUE</td><td>One row per blood type (8 rows)</td></tr>
+  <tr><td><code>units</code></td><td>INT</td><td>DEFAULT 0</td><td>Current stock in units</td></tr>
+  <tr><td><code>max_units</code></td><td>INT</td><td>DEFAULT 100</td><td>Maximum capacity</td></tr>
+  <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>ON UPDATE NOW()</td><td>Last inventory change</td></tr>
+</table>
+
+<!-- donations -->
+<h4>Table 5: donations</h4>
+<p>Audit log of every donation event. Links donors to inventory.</p>
+<table>
+  <tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr>
+  <tr><td><code>id</code></td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Donation event ID</td></tr>
+  <tr><td><code>donor_id</code></td><td>INT</td><td>FK → donors(id) CASCADE</td><td>Which donor donated</td></tr>
+  <tr><td><code>blood_group</code></td><td>ENUM</td><td>NOT NULL</td><td>Blood type donated</td></tr>
+  <tr><td><code>units</code></td><td>INT</td><td>DEFAULT 1</td><td>Units donated</td></tr>
+  <tr><td><code>donated_on</code></td><td>DATE</td><td>NOT NULL</td><td>Date of donation</td></tr>
+  <tr><td><code>notes</code></td><td>TEXT</td><td>NULL allowed</td><td>Optional remarks</td></tr>
+  <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>DEFAULT NOW()</td><td>Record creation time</td></tr>
+</table>
+
+<hr>
+<h3>4.2 Entity-Relationship Diagram</h3>
+
+<div class="er-wrap">
+  <div class="er-box">
+    <div class="er-title">admins</div>
+    <div class="er-field pk">🔑 id (PK)</div>
+    <div class="er-field">username</div>
+    <div class="er-field">password</div>
+    <div class="er-field">email</div>
+    <div class="er-field">created_at</div>
+  </div>
+  <div class="er-box">
+    <div class="er-title">donors</div>
+    <div class="er-field pk">🔑 id (PK)</div>
+    <div class="er-field">first_name</div>
+    <div class="er-field">last_name</div>
+    <div class="er-field">email (UNIQUE)</div>
+    <div class="er-field">phone</div>
+    <div class="er-field">date_of_birth</div>
+    <div class="er-field">gender</div>
+    <div class="er-field">blood_group</div>
+    <div class="er-field">city</div>
+    <div class="er-field">weight_kg</div>
+    <div class="er-field">last_donation</div>
+    <div class="er-field">availability</div>
+    <div class="er-field">is_active</div>
+  </div>
+  <div class="er-box">
+    <div class="er-title">donations</div>
+    <div class="er-field pk">🔑 id (PK)</div>
+    <div class="er-field fk">🔗 donor_id (FK)</div>
+    <div class="er-field">blood_group</div>
+    <div class="er-field">units</div>
+    <div class="er-field">donated_on</div>
+    <div class="er-field">notes</div>
+  </div>
+  <div class="er-box">
+    <div class="er-title">blood_inventory</div>
+    <div class="er-field pk">🔑 id (PK)</div>
+    <div class="er-field">blood_group (UNIQUE)</div>
+    <div class="er-field">units</div>
+    <div class="er-field">max_units</div>
+    <div class="er-field">updated_at</div>
+  </div>
+  <div class="er-box">
+    <div class="er-title">blood_requests</div>
+    <div class="er-field pk">🔑 id (PK)</div>
+    <div class="er-field">patient_name</div>
+    <div class="er-field">contact_number</div>
+    <div class="er-field">blood_group</div>
+    <div class="er-field">units_required</div>
+    <div class="er-field">hospital</div>
+    <div class="er-field">required_by</div>
+    <div class="er-field">status</div>
+  </div>
+</div>
+
+<h4>Relationships</h4>
+<table>
+  <tr><th>Relationship</th><th>Type</th><th>Description</th></tr>
+  <tr><td>donors → donations</td><td>One-to-Many</td><td>One donor can donate many times. FK: donations.donor_id → donors.id (CASCADE DELETE)</td></tr>
+  <tr><td>blood_inventory → donations</td><td>Indirect</td><td>When a donation is logged, inventory units are incremented via stored procedure</td></tr>
+  <tr><td>blood_inventory → blood_requests</td><td>Indirect</td><td>When a request is fulfilled, inventory units are decremented via stored procedure</td></tr>
+  <tr><td>admins (standalone)</td><td>—</td><td>No FK relationships; manages the system independently</td></tr>
+</table>
+
+<hr>
+<h3>4.3 Views</h3>
+<p>Views are virtual tables that simplify complex queries.</p>
+
+<h4>View 1: v_critical_blood</h4>
+<p>Returns all blood types sorted by stock level with status labels (Critical / Low / OK).</p>
+<pre>
+CREATE VIEW v_critical_blood AS
+SELECT blood_group, units, max_units,
+       ROUND(units/max_units * 100, 1) AS stock_pct,
+       CASE
+           WHEN units &lt;= 10 THEN 'Critical'
+           WHEN units &lt;= 20 THEN 'Low'
+           ELSE 'OK'
+       END AS status
+FROM blood_inventory
+ORDER BY units ASC;
+</pre>
+<p><strong>Used by:</strong> <code>api/inventory.php</code> GET — powers the inventory cards on the Inventory page.</p>
+
+<h4>View 2: v_pending_requests</h4>
+<p>Returns all pending blood requests sorted by urgency (days remaining).</p>
+<pre>
+CREATE VIEW v_pending_requests AS
+SELECT id, patient_name, blood_group, units_required,
+       hospital, required_by,
+       DATEDIFF(required_by, CURDATE()) AS days_left
+FROM blood_requests
+WHERE status = 'Pending'
+ORDER BY required_by ASC;
+</pre>
+<p><strong>Used by:</strong> Admin dashboard to prioritise urgent requests.</p>
+
+<hr>
+<h3>4.4 Stored Procedures</h3>
+<p>Stored procedures are pre-compiled SQL blocks that run multiple statements atomically.</p>
+
+<h4>Procedure 1: add_donation()</h4>
+<p>Called when a donation is logged. It inserts the donation record AND updates inventory in one call.</p>
+<pre>
+CALL add_donation(donor_id, blood_group, units, date);
+
+-- What it does internally:
+-- 1. INSERT into donations table
+-- 2. UPDATE blood_inventory SET units = units + p_units
+-- 3. UPDATE donors SET last_donation = p_date
+</pre>
+
+<h4>Procedure 2: fulfill_request()</h4>
+<p>Called when admin marks a request as Fulfilled. Deducts units from inventory.</p>
+<pre>
+CALL fulfill_request(request_id);
+
+-- What it does internally:
+-- 1. SELECT blood_group &amp; units_required from blood_requests
+-- 2. UPDATE blood_inventory SET units = GREATEST(0, units - v_units)
+-- 3. UPDATE blood_requests SET status = 'Fulfilled'
+</pre>
+
+<div class="box box-success">
+  <strong>Why use stored procedures?</strong> They group related SQL statements, reduce network round-trips, and prevent partial updates — if one statement fails, the whole procedure can be rolled back.
+</div>
+
+<hr>
+<h3>4.5 Normalization</h3>
+
+<h4>First Normal Form (1NF) ✓</h4>
+<ul>
+  <li>All columns hold atomic (single) values — no comma-separated blood groups or multi-valued fields</li>
+  <li>Every table has a primary key (<code>id</code>)</li>
+  <li>No repeating groups</li>
+</ul>
+
+<h4>Second Normal Form (2NF) ✓</h4>
+<ul>
+  <li>All tables use a single-column primary key, so there can be no partial dependency</li>
+  <li>Every non-key column depends fully on the primary key</li>
+</ul>
+
+<h4>Third Normal Form (3NF) ✓</h4>
+<ul>
+  <li>No transitive dependencies — donor details are in <code>donors</code>, inventory in <code>blood_inventory</code>, etc.</li>
+  <li>Blood group stock is not stored inside <code>donors</code> — it lives in its own <code>blood_inventory</code> table</li>
+</ul>
+
+<div class="box box-warn">
+  <strong>Note on blood_group redundancy:</strong> The <code>blood_group</code> column appears in <code>donors</code>, <code>donations</code>, and <code>blood_requests</code>. This is intentional — it avoids costly joins and is a controlled denormalization acceptable in this design.
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     5. BACKEND API — PHP FILES
+════════════════════════════════════════════════════════ -->
+<h2 id="api">5. Backend API — PHP Files</h2>
+
+<h3>api/db_connect.php</h3>
+<p>Shared database connection and helper functions. Every API file starts with <code>require_once 'db_connect.php'</code>.</p>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td><code>getConnection()</code></td><td>Opens a MySQLi connection to <code>blood_bank_db</code>. Returns the connection object or dies with a JSON error.</td></tr>
+  <tr><td><code>jsonResponse($success, $message, $data)</code></td><td>Sets JSON headers, encodes the response array, and exits. Used by all API endpoints for consistent output.</td></tr>
+  <tr><td><code>clean($conn, $value)</code></td><td>Sanitizes input: trims whitespace, strips HTML tags, escapes for SQL. Used before inserting user input.</td></tr>
+</table>
+
+<h3>api/donors.php</h3>
+<table>
+  <tr><th>HTTP Method</th><th>Action</th><th>Key Logic</th></tr>
+  <tr><td><span class="pill pill-blue">GET</span></td><td>Search/list donors</td><td>Builds dynamic WHERE clause based on <code>?blood_group=</code>, <code>?city=</code>, <code>?availability=</code> query params. Uses MySQLi prepared statements with <code>bind_param()</code>.</td></tr>
+  <tr><td><span class="pill pill-green">POST</span></td><td>Register new donor</td><td>Validates required fields, checks for duplicate email, then INSERTs into <code>donors</code> table using a prepared statement.</td></tr>
+</table>
+
+<h3>api/inventory.php</h3>
+<table>
+  <tr><th>HTTP Method</th><th>Action</th><th>Key Logic</th></tr>
+  <tr><td><span class="pill pill-blue">GET</span></td><td>Fetch all inventory</td><td>Queries <code>blood_inventory</code>, calculates <code>stock_pct</code> and <code>status</code> (Critical/Low/OK) inline using CASE.</td></tr>
+  <tr><td><span class="pill pill-orange">PUT</span></td><td>Update units (admin)</td><td>Updates units for a specific blood group. Admin-only action.</td></tr>
+  <tr><td><span class="pill pill-green">POST</span></td><td>Log a donation</td><td>Calls <code>CALL add_donation()</code> stored procedure which updates both <code>donations</code> and <code>blood_inventory</code>.</td></tr>
+</table>
+
+<h3>api/requests.php</h3>
+<table>
+  <tr><th>HTTP Method</th><th>Action</th><th>Key Logic</th></tr>
+  <tr><td><span class="pill pill-blue">GET</span></td><td>List all requests</td><td>Returns all blood requests, optionally filtered by <code>?status=Pending</code>.</td></tr>
+  <tr><td><span class="pill pill-green">POST</span></td><td>Submit new request</td><td>Validates all required fields and INSERTs into <code>blood_requests</code> with default status 'Pending'.</td></tr>
+  <tr><td><span class="pill pill-orange">PUT</span></td><td>Update request status</td><td>If status is 'Fulfilled', calls <code>CALL fulfill_request()</code> to deduct inventory. Otherwise just UPDATEs status.</td></tr>
+</table>
+
+<h3>api/admin_login.php</h3>
+<table>
+  <tr><th>HTTP Method</th><th>Action</th><th>Key Logic</th></tr>
+  <tr><td><span class="pill pill-green">POST</span></td><td>Admin login</td><td>Fetches admin record by username, then uses <code>password_verify()</code> to check bcrypt hash. On success, sets <code>$_SESSION</code>.</td></tr>
+  <tr><td><span class="pill pill-blue">GET</span></td><td>Check session</td><td>Returns whether <code>$_SESSION['admin_id']</code> is set (i.e. user is logged in).</td></tr>
+</table>
+
+<div class="box box-danger">
+  <strong>Security Note:</strong> All user inputs go through <code>clean()</code> and MySQLi <strong>prepared statements</strong> with <code>bind_param()</code>. This prevents SQL Injection. Passwords are stored as bcrypt hashes — never plain text.
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     6. FRONTEND JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+<h2 id="js">6. Frontend JavaScript — Functions</h2>
+
+<h3>js/utils.js — Shared Utilities</h3>
+<table>
+  <tr><th>Function / Variable</th><th>What it does</th></tr>
+  <tr><td><code>API</code> object</td><td>Central object holding all API endpoint URLs so they're defined once.</td></tr>
+  <tr><td><code>$(sel)</code></td><td>Shorthand for <code>document.querySelector(sel)</code>.</td></tr>
+  <tr><td><code>$$(sel)</code></td><td>Shorthand for <code>querySelectorAll()</code>, returns an array.</td></tr>
+  <tr><td><code>showAlert(id, msg, type)</code></td><td>Shows a styled alert inside the element with given ID. Auto-hides after 5 seconds.</td></tr>
+  <tr><td><code>setLoading(btn, loading)</code></td><td>Disables a button and shows "Please wait…" during an async request. Re-enables on completion.</td></tr>
+</table>
+
+<h3>js/router.js — Page Navigation</h3>
+<table>
+  <tr><th>Function</th><th>What it does</th></tr>
+  <tr><td><code>showPage(pageId)</code></td><td>Hides all <code>.page</code> divs, shows the target page, updates active nav link, scrolls to top, and lazy-loads data if needed (inventory, donors, admin).</td></tr>
+</table>
+
+<h3>js/donors.js — Donor Features</h3>
+<table>
+  <tr><th>Function</th><th>What it does</th></tr>
+  <tr><td><code>selectedBloodGroup</code></td><td>Global variable tracking which blood group button is selected on the donor form.</td></tr>
+  <tr><td><code>initBloodGroupBtns(containerId)</code></td><td>Attaches click listeners to all <code>.bg-btn</code> elements. Highlights selected button and updates <code>selectedBloodGroup</code>.</td></tr>
+  <tr><td><code>submitDonorRegistration(e)</code></td><td>Reads all form fields, validates blood group is selected, sends POST request to <code>api/donors.php</code> with JSON payload. Shows success/error alert.</td></tr>
+  <tr><td><code>searchDonors()</code></td><td>Reads filter inputs (blood group, city, availability), builds URL query string, sends GET request to <code>api/donors.php</code>, calls <code>renderDonorCards()</code>.</td></tr>
+  <tr><td><code>renderDonorCards(donors)</code></td><td>Takes an array of donor objects and generates HTML cards dynamically using <code>.map()</code>, injected into <code>#donor-results</code> grid.</td></tr>
+  <tr><td><code>contactDonor(name, phone)</code></td><td>Shows an alert with donor contact info. In production this would trigger SMS/email.</td></tr>
+</table>
+
+<h3>js/requests.js — Blood Request</h3>
+<table>
+  <tr><th>Function</th><th>What it does</th></tr>
+  <tr><td><code>submitBloodRequest(e)</code></td><td>Collects request form data (patient, blood group, hospital, etc.), sends POST to <code>api/requests.php</code>. Shows confirmation or error.</td></tr>
+</table>
+
+<h3>js/inventory.js — Blood Stock</h3>
+<table>
+  <tr><th>Function</th><th>What it does</th></tr>
+  <tr><td><code>loadInventory()</code></td><td>Fetches inventory data from <code>api/inventory.php</code> via GET, then calls <code>renderInventoryCards()</code>.</td></tr>
+  <tr><td><code>renderInventoryCards(inventory)</code></td><td>Builds HTML cards for each blood group showing units, stock percentage bar, and status pill (Critical/Low/OK).</td></tr>
+</table>
+
+<h3>js/admin.js — Admin Dashboard</h3>
+<table>
+  <tr><th>Function</th><th>What it does</th></tr>
+  <tr><td><code>loadAdminDashboard()</code></td><td>Fires 3 parallel API calls (<code>Promise.all</code>) to fetch donors, requests, and inventory. Updates stat counters and renders tables.</td></tr>
+  <tr><td><code>renderAdminRequestsTable(rows)</code></td><td>Generates the requests table rows with Approve/Reject buttons for Pending items.</td></tr>
+  <tr><td><code>renderAdminDonorsTable(rows)</code></td><td>Generates the donors table rows with availability status pills.</td></tr>
+  <tr><td><code>updateRequestStatus(id, status)</code></td><td>Sends PUT request to <code>api/requests.php</code> to change a request's status. Reloads dashboard on success.</td></tr>
+  <tr><td><code>switchAdminTab(tabId)</code></td><td>Hides all <code>.admin-tab-content</code> divs, shows the clicked tab, updates active sidebar item.</td></tr>
+</table>
+
+<h3>js/main.js — Entry Point</h3>
+<p>Runs on <code>DOMContentLoaded</code>. Initialises the blood group button selector and shows the home page as the default view.</p>
+
+
+<!-- ════════════════════════════════════════════════════════
+     7. CSS ARCHITECTURE
+════════════════════════════════════════════════════════ -->
+<h2 id="css">7. CSS Architecture</h2>
+
+<table>
+  <tr><th>File</th><th>Contents</th></tr>
+  <tr><td><code>variables.css</code></td><td>All CSS custom properties (colours, fonts, spacing, shadows, radii). Google Fonts import. Global reset (<code>*, body</code>).</td></tr>
+  <tr><td><code>base.css</code></td><td>Heading sizes (h1–h4), paragraph colour, utility classes (.hidden, .mt-*, .mb-*, .container), <code>.page</code> show/hide logic.</td></tr>
+  <tr><td><code>navbar.css</code></td><td>Sticky top navigation bar, logo, nav link hover/active states, admin button.</td></tr>
+  <tr><td><code>components.css</code></td><td>Buttons (.btn, .btn-primary, .btn-outline, .btn-sm, .btn-danger), cards, form grid, input/select/textarea focus styles, blood group selector buttons, alert boxes, status pills, admin sidebar nav.</td></tr>
+  <tr><td><code>tables.css</code></td><td>Table wrapper with border-radius overflow, thead background, hover row highlight.</td></tr>
+  <tr><td><code>layout.css</code></td><td>Page header gradient banner, content area padding, section title styles, footer grid and links.</td></tr>
+  <tr><td><code>animations.css</code></td><td><code>@keyframes fadeInUp</code> (page transitions), <code>@keyframes pulse</code> (live dot), responsive breakpoints at 900px and 600px.</td></tr>
+</table>
+
+
+<!-- ════════════════════════════════════════════════════════
+     8. DATA FLOW
+════════════════════════════════════════════════════════ -->
+<h2 id="dataflow">8. Data Flow — End to End</h2>
+
+<h3>Flow 1: Donor Registration</h3>
+<pre>
+User fills form → clicks "Register as Donor"
+  ↓
+submitDonorRegistration() [donors.js]
+  ↓ validates blood group selected
+  ↓ setLoading(btn, true) — disables button
+  ↓ fetch POST → api/donors.php  (JSON body)
+     ↓
+     db_connect.php → getConnection()
+     ↓ check required fields
+     ↓ check duplicate email (SELECT WHERE email = ?)
+     ↓ clean() all inputs
+     ↓ INSERT INTO donors (...) VALUES (?)  [prepared statement]
+     ↓ jsonResponse(true, 'Donor registered successfully!')
+  ↓
+showAlert('donor-alert', '✓ Donor registered...', 'success')
+form.reset() — clears all fields
+</pre>
+
+<h3>Flow 2: Fulfilling a Blood Request</h3>
+<pre>
+Admin clicks "Approve" → "Fulfilled" in admin panel
+  ↓
+updateRequestStatus(id, 'Fulfilled') [admin.js]
+  ↓ confirm() dialog
+  ↓ fetch PUT → api/requests.php  {id, status: 'Fulfilled'}
+     ↓
+     db_connect.php → getConnection()
+     ↓ status === 'Fulfilled' → CALL fulfill_request(id)
+        Stored Procedure:
+          SELECT blood_group, units_required FROM blood_requests WHERE id = ?
+          UPDATE blood_inventory SET units = GREATEST(0, units - v_units)
+          UPDATE blood_requests SET status = 'Fulfilled'
+     ↓ jsonResponse(true, 'Request fulfilled and inventory updated.')
+  ↓
+loadAdminDashboard() — refreshes all stats and tables
+</pre>
+
+<h3>Flow 3: Viewing Inventory</h3>
+<pre>
+User clicks "Inventory" in navbar
+  ↓
+showPage('inventory') [router.js]
+  ↓ calls loadInventory() [inventory.js]
+  ↓ fetch GET → api/inventory.php
+     ↓
+     SELECT blood_group, units, max_units,
+            ROUND(units/max_units*100, 1) AS stock_pct,
+            CASE WHEN units &lt;= 10 THEN 'Critical' ... END AS status
+     FROM blood_inventory ORDER BY blood_group
+     ↓ jsonResponse(true, 'OK', {inventory: [...]})
+  ↓
+renderInventoryCards(data.inventory) — builds 8 cards
+</pre>
+
+
+<!-- ════════════════════════════════════════════════════════
+     9. EXPECTED DBMS LECTURER QUESTIONS
+════════════════════════════════════════════════════════ -->
+<h2 id="questions">9. Expected DBMS Lecturer Questions &amp; Answers</h2>
+
+<div class="box box-info">
+  These are the most commonly asked questions in DBMS project vivas. Study these carefully — the lecturer will likely pick from this list.
+</div>
+
+<h3>— Database Design —</h3>
+
+<div class="qa no-break">
+  <div class="question">What is the primary key in each table and why?</div>
+  <div class="answer">Every table has an <code>id INT AUTO_INCREMENT PRIMARY KEY</code>. This is a surrogate key — it uniquely identifies each row, is never null, never changes, and is efficient for joins. For <code>blood_inventory</code>, <code>blood_group</code> is also UNIQUE since only one row per blood type should exist.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is a foreign key? Where is it used in your project?</div>
+  <div class="answer">A foreign key is a column that references the primary key of another table, enforcing referential integrity. In this project, <code>donations.donor_id</code> is a foreign key referencing <code>donors.id</code>. With <code>ON DELETE CASCADE</code>, if a donor is deleted, all their donation records are automatically deleted too.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is normalization? Which normal form is your database in?</div>
+  <div class="answer">Normalization is the process of organizing a database to reduce redundancy and improve data integrity. This project is in <strong>Third Normal Form (3NF)</strong>: (1NF) all columns hold atomic values, no repeating groups; (2NF) all non-key attributes depend on the full primary key; (3NF) no transitive dependencies — e.g., blood inventory is in its own table, not inside the donors table.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">Why is there a separate blood_inventory table instead of just counting donor blood groups?</div>
+  <div class="answer">Counting donor blood groups would give the number of registered donors, not the actual units of blood available. The <code>blood_inventory</code> table tracks the physical blood stock — which increases when donations are processed and decreases when requests are fulfilled. These are fundamentally different things.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is an ENUM type? Why did you use it for blood_group and status?</div>
+  <div class="answer">ENUM is a MySQL data type that restricts a column to a predefined list of values. It saves storage compared to VARCHAR and enforces data integrity at the database level — for example, you cannot accidentally insert 'X+' as a blood group. It makes queries faster too since MySQL stores ENUMs as integers internally.</div>
+</div>
+
+<h3>— SQL Queries —</h3>
+
+<div class="qa no-break">
+  <div class="question">Write a query to find all available donors with blood group O+.</div>
+  <div class="answer">
+    <pre>SELECT first_name, last_name, phone, city
+FROM donors
+WHERE blood_group = 'O+' AND availability != 'Not Available' AND is_active = 1;</pre>
+  </div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">Write a query to find which blood groups are critically low (less than 10 units).</div>
+  <div class="answer">
+    <pre>SELECT blood_group, units, max_units
+FROM blood_inventory
+WHERE units &lt; 10
+ORDER BY units ASC;</pre>
+  </div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">Write a query to count total donations per blood group.</div>
+  <div class="answer">
+    <pre>SELECT blood_group, SUM(units) AS total_units, COUNT(*) AS total_donations
+FROM donations
+GROUP BY blood_group
+ORDER BY total_units DESC;</pre>
+  </div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">Write a query to get donors who have never donated.</div>
+  <div class="answer">
+    <pre>SELECT id, first_name, last_name, blood_group
+FROM donors
+WHERE last_donation IS NULL AND is_active = 1;</pre>
+  </div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">How do you join the donors and donations tables?</div>
+  <div class="answer">
+    <pre>SELECT d.first_name, d.last_name, d.blood_group,
+       dn.donated_on, dn.units
+FROM donors d
+INNER JOIN donations dn ON d.id = dn.donor_id
+ORDER BY dn.donated_on DESC;</pre>
+    An INNER JOIN returns only donors who have at least one donation. Use LEFT JOIN to include donors with no donations.
+  </div>
+</div>
+
+<h3>— Views —</h3>
+
+<div class="qa no-break">
+  <div class="question">What is a View? Why did you create views in your project?</div>
+  <div class="answer">A view is a saved SQL query stored as a virtual table. It doesn't store data — it generates results dynamically each time it's queried. I created <code>v_critical_blood</code> to simplify getting inventory status without repeating the CASE logic in every query, and <code>v_pending_requests</code> to easily see urgent pending requests sorted by deadline. Views improve code reuse and hide query complexity.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is the difference between a View and a Table?</div>
+  <div class="answer">A table physically stores data on disk. A view is a virtual table — it stores a query definition, not data. Every time you query a view, MySQL runs the underlying SELECT. Views cannot (usually) be inserted into directly. They are useful for read-only reporting queries.</div>
+</div>
+
+<h3>— Stored Procedures —</h3>
+
+<div class="qa no-break">
+  <div class="question">What is a Stored Procedure? Explain the ones in your project.</div>
+  <div class="answer">A stored procedure is a named block of SQL code saved in the database that can be called with CALL. In this project: <strong>add_donation()</strong> — when a donation is logged, it inserts into the donations table, updates the donor's last donation date, and increments blood_inventory units in one atomic call. <strong>fulfill_request()</strong> — when a request is fulfilled, it decrements inventory and updates the request status.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">Why use a stored procedure instead of running the SQL from PHP?</div>
+  <div class="answer">Three reasons: (1) <strong>Atomicity</strong> — all statements in the procedure succeed or fail together, preventing partial updates. (2) <strong>Performance</strong> — stored procedures are pre-compiled by MySQL, faster than sending raw SQL each time. (3) <strong>Security</strong> — the PHP app only needs EXECUTE permission on the procedure, not direct UPDATE/INSERT access to tables.</div>
+</div>
+
+<h3>— Security &amp; Best Practices —</h3>
+
+<div class="qa no-break">
+  <div class="question">How did you prevent SQL Injection in your project?</div>
+  <div class="answer">All database queries use MySQLi <strong>prepared statements</strong> with <code>bind_param()</code>. The user input is passed as a parameter — it is never concatenated directly into the SQL string. Additionally, all inputs pass through the <code>clean()</code> function which strips HTML tags and escapes special characters.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">How are passwords stored in the database?</div>
+  <div class="answer">Admin passwords are hashed using <strong>bcrypt</strong> via PHP's <code>password_hash()</code> function. The hash is stored in the database, not the plain text. On login, <code>password_verify()</code> compares the entered password against the stored hash. Even if the database is compromised, the real passwords remain safe.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What does the is_active column in donors do?</div>
+  <div class="answer">This is a <strong>soft delete</strong> flag. Instead of physically deleting a donor record (which would break the donation history foreign keys), we set <code>is_active = 0</code>. All queries filter with <code>WHERE is_active = 1</code>, so soft-deleted donors are hidden but their donation records are preserved for historical reporting.</div>
+</div>
+
+<h3>— Architecture &amp; Design —</h3>
+
+<div class="qa no-break">
+  <div class="question">What is a REST API? How does your PHP backend follow REST principles?</div>
+  <div class="answer">REST (Representational State Transfer) is an architectural style where resources are accessed via URLs and standard HTTP methods. In this project: GET fetches data, POST creates new records, PUT updates existing records. Each resource has its own endpoint (donors.php, requests.php, inventory.php). All responses are JSON. The API is stateless — each request carries all needed information.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is a Single Page Application (SPA)?</div>
+  <div class="answer">An SPA loads one HTML page and dynamically shows/hides content sections using JavaScript, instead of loading a new page from the server on each navigation. In LifeFlow, <code>showPage('donate')</code> hides all other page divs and shows <code>#page-donate</code> — no server request is made. This gives a faster, app-like user experience.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is the 3-tier architecture and how does your project use it?</div>
+  <div class="answer">3-tier architecture separates an application into: <strong>Presentation tier</strong> (HTML/CSS/JS — what the user sees), <strong>Application tier</strong> (PHP API — business logic, validation, query building), and <strong>Data tier</strong> (MySQL — data storage, views, procedures). Each tier communicates only with the adjacent tier — JavaScript never touches MySQL directly; it always goes through PHP.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What is ACID in databases? Does your project handle it?</div>
+  <div class="answer">ACID stands for: <strong>Atomicity</strong> (all or nothing), <strong>Consistency</strong> (data remains valid), <strong>Isolation</strong> (concurrent transactions don't interfere), <strong>Durability</strong> (committed data persists). The stored procedures in this project handle atomicity — <code>add_donation()</code> ensures the donation log and inventory update both happen together. MySQL's InnoDB engine provides full ACID compliance by default.</div>
+</div>
+
+<div class="qa no-break">
+  <div class="question">What would you improve in this project given more time?</div>
+  <div class="answer">Good answers: (1) Add database transactions (<code>BEGIN / COMMIT / ROLLBACK</code>) around stored procedures. (2) Add role-based access control — only authenticated admins can access admin API endpoints. (3) Add indexing on frequently searched columns like <code>blood_group</code> and <code>city</code>. (4) Implement pagination for large donor lists. (5) Add email/SMS notification when matching donors exist for a new request.</div>
+</div>
+
+<hr>
+<div class="box box-success" style="margin-top:30px;text-align:center;font-size:14px">
+  <strong>LifeFlow Blood Bank Management System</strong><br>
+  DBMS Project — Blood Bank &amp; Donation Management<br>
+  <span style="color:#555">© 2026 — Built with PHP, MySQL, HTML, CSS, JavaScript</span>
+</div>
+
+</div><!-- end .page -->
+</body>
+</html>
