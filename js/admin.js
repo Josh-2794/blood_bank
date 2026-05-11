@@ -24,9 +24,6 @@ async function loadAdminDashboard() {
 
 // ── Table Renderers ──────────────────────────────────────────
 function renderAdminRequestsTable(rows) {
-    const tbody = document.getElementById('admin-req-tbody');
-    if (!tbody) return;
-
     const statusClass = {
         Pending:   'pill-warning',
         Approved:  'pill-success',
@@ -34,7 +31,7 @@ function renderAdminRequestsTable(rows) {
         Rejected:  'pill-danger',
     };
 
-    tbody.innerHTML = rows.slice(0, 10).map(r => `
+    const buildRow = r => `
         <tr>
             <td>${r.patient_name}</td>
             <td><strong>${r.blood_group}</strong></td>
@@ -48,8 +45,17 @@ function renderAdminRequestsTable(rows) {
                 <button class="btn btn-sm btn-danger"  onclick="updateRequestStatus(${r.id},'Rejected')" style="margin-left:4px">Reject</button>
                 ` : '—'}
             </td>
-        </tr>
-    `).join('');
+        </tr>`;
+
+    // Overview tab — latest 10
+    const overview = document.getElementById('admin-req-tbody');
+    if (overview) overview.innerHTML = rows.slice(0, 10).map(buildRow).join('');
+
+    // Requests tab — all rows
+    const full = document.getElementById('admin-req-tbody2');
+    if (full) full.innerHTML = rows.length
+        ? rows.map(buildRow).join('')
+        : '<tr><td colspan="7" class="text-muted" style="padding:20px">No requests found.</td></tr>';
 }
 
 function renderAdminDonorsTable(rows) {

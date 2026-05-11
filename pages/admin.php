@@ -86,9 +86,7 @@
                         <table>
                             <thead><tr><th>Patient</th><th>Blood</th><th>Hospital</th><th>Required By</th><th>Status</th><th>Action</th></tr></thead>
                             <tbody id="admin-req-tbody2">
-                                <tr><td>Fatima Begum</td> <td><strong>O+</strong></td>  <td>DMCH</td>  <td>2026-04-05</td><td><span class="pill pill-warning">Pending</span></td><td><button class="btn btn-sm btn-primary" onclick="updateRequestStatus(1,'Approved')">Approve</button></td></tr>
-                                <tr><td>Karim Hossain</td><td><strong>AB-</strong></td> <td>Apollo</td><td>2026-04-06</td><td><span class="pill pill-success">Approved</span></td><td>—</td></tr>
-                                <tr><td>Nusrat Jahan</td> <td><strong>O-</strong></td>  <td>BSMMU</td> <td>2026-04-08</td><td><span class="pill pill-warning">Pending</span></td><td><button class="btn btn-sm btn-primary" onclick="updateRequestStatus(5,'Approved')">Approve</button></td></tr>
+                                <tr><td colspan="7" class="text-muted" style="padding:20px">Loading...</td></tr>
                             </tbody>
                         </table>
                     </div>
