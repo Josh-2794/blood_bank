@@ -84,7 +84,7 @@
                     <div style="font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">All Blood Requests</div>
                     <div class="table-wrap">
                         <table>
-                            <thead><tr><th>Patient</th><th>Blood</th><th>Hospital</th><th>Required By</th><th>Status</th><th>Action</th></tr></thead>
+                            <thead><tr><th>Patient</th><th>Blood</th><th>Units</th><th>Hospital</th><th>Required By</th><th>Status</th><th>Action</th></tr></thead>
                             <tbody id="admin-req-tbody2">
                                 <tr><td colspan="7" class="text-muted" style="padding:20px">Loading...</td></tr>
                             </tbody>

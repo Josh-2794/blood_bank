@@ -4,14 +4,20 @@
 
 // ── Dashboard Data Loading ───────────────────────────────────
 async function loadAdminDashboard() {
-    const [donorsRes, requestsRes, invRes] = await Promise.all([
-        fetch(API.donors),
-        fetch(API.requests),
-        fetch(API.inventory),
-    ]);
-    const donors    = await donorsRes.json();
-    const requests  = await requestsRes.json();
-    const inventory = await invRes.json();
+    let donors, requests, inventory;
+    try {
+        const [donorsRes, requestsRes, invRes] = await Promise.all([
+            fetch(API.donors),
+            fetch(API.requests),
+            fetch(API.inventory),
+        ]);
+        donors    = await donorsRes.json();
+        requests  = await requestsRes.json();
+        inventory = await invRes.json();
+    } catch (err) {
+        console.error('Admin dashboard load failed:', err);
+        return;
+    }
 
     const el = id => document.getElementById(id);
     if (el('stat-donors'))   el('stat-donors').textContent   = donors.count || 0;

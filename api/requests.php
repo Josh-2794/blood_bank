@@ -21,6 +21,7 @@ if ($method === 'GET') {
     $sql .= ' ORDER BY created_at DESC';
 
     $result = $conn->query($sql);
+    if ($result === false) jsonResponse(false, 'Query failed: ' . $conn->error);
     $rows   = $result->fetch_all(MYSQLI_ASSOC);
     jsonResponse(true, 'OK', ['requests' => $rows, 'count' => count($rows)]);
 }

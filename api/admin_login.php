@@ -42,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // ── GET: check session ───────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    session_start();
     if (!empty($_SESSION['admin_id'])) {
         jsonResponse(true, 'Logged in', ['username' => $_SESSION['admin_user']]);
     } else {
